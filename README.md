@@ -10,7 +10,7 @@
 
 Перед публикацией замените в `og:image` на всех страницах путь `assets/img/og-cover.jpg` на полный адрес сайта, иначе в соцсетях не будет картинки в превью ссылки.
 
-Фото взяты с Unsplash, авторы перечислены в [CREDITS.md](CREDITS.md).
+Фото взяты с Unsplash
 
 ---
 
@@ -25,4 +25,4 @@ Russian text lives in the HTML, English in `assets/js/lang/en.js`. Products are 
 
 Before publishing, replace `assets/img/og-cover.jpg` in `og:image` on every page with the full site URL, otherwise social networks won't show the link preview image.
 
-Photos are from Unsplash, authors are listed in [CREDITS.md](CREDITS.md).
+Photos are from Unsplash
