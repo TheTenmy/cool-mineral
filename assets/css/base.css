@@ -1,0 +1,182 @@
+/* Цвета, шрифты и базовая типографика.
+   Фирменный цвет — серый. Вся палитра — один тёплый серый в разной светлоте:
+   тёмный стол, на нём состаренная газета, сверху светлые вклейки,
+   внизу лист тёмного картона с подвалом. */
+
+:root {
+  --desk: #34312c;          /* стол, на котором лежат листы */
+  --glass: rgba(26, 24, 21, .72);          /* матовое стекло верхней строки и подвала */
+  --glass-edge: rgba(255, 248, 235, .22);  /* светлая грань стекла */
+  --paper: #d6cebd;         /* газетный лист */
+  --paper-light: #e5dece;   /* карточки, вклейки */
+  --paper-dark: #c7bea9;    /* подложки, плашки */
+
+  --gray-100: #c3baa6;
+  --gray-200: #aca38f;
+  --gray-400: #7a7365;
+  --gray-600: #4e4a42;
+  --gray-800: #322f2a;
+  --ink: #1e1c19;
+
+  --font-display: "Playfair Display", "Times New Roman", serif;
+  --font-body: "Old Standard TT", Georgia, serif;
+  --font-mono: "PT Mono", "Courier New", monospace;
+  --font-hand: "Caveat", "Segoe Print", cursive;
+
+  --rule: 1px solid var(--ink);
+  --rule-double: 4px double var(--ink);
+  --rule-dotted: 1px dotted var(--gray-400);
+
+  --page-width: 1200px;
+  --topbar-height: 44px;     /* липкая верхняя строка; под неё отступают якоря и липкие блоки */
+  --gutter: clamp(16px, 4vw, 48px);
+
+  --grain: url("../img/textures/paper-grain.svg");
+  --fibers: url("../img/textures/paper-fibers.svg");
+  --specks: url("../img/textures/paper-specks.svg");
+  /* пятна старения на листе: размытые эллипсы, которые гаснут до края плитки, поэтому без стыков */
+  --age-spots:
+    radial-gradient(ellipse 30% 22% at 25% 30%, rgba(140, 110, 60, .14), transparent 70%),
+    radial-gradient(ellipse 22% 30% at 78% 70%, rgba(140, 110, 60, .1), transparent 70%);
+  /* общая фактура для всех бумажных поверхностей: background: var(--paper-texture), <цвет>; */
+  --paper-texture: var(--grain), var(--fibers);
+
+  /* SVG вшиты в CSS как data-URI: так они работают и без сервера.
+     Рваный край — маска (из отдельного файла маска без сервера не загрузится),
+     стрелка — обычная картинка: маска внутри 3D-карточки в Chrome даёт полосы. */
+  --torn-edge: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='18' viewBox='0 0 600 18' preserveAspectRatio='none'%3E%3Cpath d='M0 0H600V10L591 9.7L579 11.3L572 7.6L560 11.9L550 14.2L544 9.0L530 10.2L522 14.4L512 8.9L506 14.5L496 14.2L487 8.5L477 12.6L466 7.8L451 10.0L439 11.6L431 9.2L421 7.8L407 14.6L401 15.2L386 13.3L376 14.6L362 8.8L350 12.4L338 11.1L329 9.7L323 7.7L310 12.6L300 11.7L284 11.2L273 8.3L257 8.8L245 15.2L229 12.7L219 8.7L207 13.7L196 12.7L187 15.1L180 14.6L171 9.5L156 12.5L147 8.1L139 9.6L133 7.4L126 15.1L116 13.6L105 7.2L95 9.9L87 14.0L75 14.8L60 13.1L53 9.6L44 15.0L34 8.2L22 12.4L14 10.0L8 10.3L0 8.5Z' fill='%23000'/%3E%3C/svg%3E");      /* рваный край листа */
+  --marker-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='28' viewBox='0 0 40 28'%3E%3Cg fill='none' stroke='%23322f2a' stroke-width='2.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 21C7 8 26 3 33.5 16.5'/%3E%3Cpath d='M34.5 7.5L33.8 17L25.8 12.4'/%3E%3C/g%3E%3C/svg%3E");  /* стрелка маркером */
+}
+
+/* Матовое закалённое стекло: тёмная полупрозрачная заливка, размытие того, что под ним,
+   блик по верхней грани и фаска по краям. Где backdrop-filter не поддерживается,
+   заливка просто плотнее, и текст остаётся читаемым. */
+.glass {
+  background:
+    linear-gradient(160deg, rgba(255, 250, 240, .1), rgba(255, 250, 240, 0) 40%),
+    var(--glass);
+  border: 1px solid var(--glass-edge);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 250, 240, .25),
+    inset 0 -1px 0 rgba(0, 0, 0, .4),
+    0 10px 30px -10px rgba(0, 0, 0, .6);
+  color: var(--paper-light);
+  -webkit-backdrop-filter: blur(14px) saturate(130%);
+  backdrop-filter: blur(14px) saturate(130%);
+}
+.glass :focus-visible { outline-color: var(--paper-light); }  /* тёмная рамка на тёмном стекле не видна */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass { --glass: rgba(26, 24, 21, .94); }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--topbar-height) + 16px); }
+
+body {
+  margin: 0;
+  background: var(--desk);
+  color: var(--ink);
+  font: 18px/1.6 var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Стол — неподвижный слой за страницей: при прокрутке листы едут, стол стоит.
+   Все слои либо мелкий шум, либо пятна, гаснущие до края плитки, — стыков нет. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    var(--specks),
+    radial-gradient(ellipse 28% 18% at 30% 35%, rgba(150, 130, 95, .16), transparent 70%),
+    radial-gradient(ellipse 22% 26% at 72% 72%, rgba(0, 0, 0, .3), transparent 70%),
+    radial-gradient(ellipse 120% 90% at 50% 40%, transparent 55%, rgba(0, 0, 0, .45)),
+    var(--desk);
+  background-size: 360px 360px, 1300px 1500px, 1100px 1400px, 100% 100%, auto;
+  background-position: 0 0, 0 0, 300px 0, 0 0, 0 0;
+  pointer-events: none;
+}
+
+img { display: block; max-width: 100%; height: auto; }
+
+a { color: inherit; text-underline-offset: 3px; }
+a:hover { text-decoration-thickness: 2px; }
+
+:focus-visible { outline: 2px dashed var(--ink); outline-offset: 4px; }
+
+h1, h2, h3 {
+  margin: 0 0 .4em;
+  font-family: var(--font-display);
+  font-weight: 900;
+  line-height: 1.05;
+  /* лёгкое растекание краски, как при печати на рыхлой бумаге */
+  text-shadow: 0 0 1px rgba(42, 40, 37, .35);
+}
+h1 { font-size: clamp(40px, 6.6vw, 80px); letter-spacing: -.01em; }
+/* Заголовки не делим переносами; balance выравнивает длину строк. break-word — только страховка от вылезания за край */
+h1, h2, h3 { overflow-wrap: break-word; text-wrap: balance; }
+h2 { font-size: clamp(30px, 4.2vw, 50px); }
+h3 { font-size: 24px; }
+
+p { margin: 0 0 1em; }
+
+.kicker {
+  margin: 0 0 12px;
+  font: 13px var(--font-mono);
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--gray-600);
+}
+
+.lede { max-width: 36ch; font-size: 21px; font-style: italic; }
+
+.handwritten {
+  margin: 0;
+  font: 500 26px/1.15 var(--font-hand);
+  color: var(--gray-800);
+}
+
+.fleuron {
+  margin: 0;
+  text-align: center;
+  font-size: 26px;
+  line-height: 1;
+  color: var(--gray-400);
+}
+
+.nowrap { white-space: nowrap; }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: absolute;
+  top: 8px;
+  left: -999px;
+  z-index: 100;
+  padding: 8px 14px;
+  background: var(--ink);
+  color: var(--paper);
+}
+.skip-link:focus { left: 8px; }
+
+@media (max-width: 760px) {
+  body { font-size: 17px; }
+}
+
+@media (max-width: 400px) {
+  h1 { font-size: 34px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}

@@ -1,0 +1,350 @@
+/* Повторяющиеся элементы: кнопки, фото, карточки товаров, вырезки, штампы. */
+
+/* ---- Кнопки ---- */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 12px 24px;
+  border: 1px solid var(--ink);
+  background: var(--paper-light);
+  color: var(--ink);
+  font: 700 17px/1.2 var(--font-body);
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+}
+.button:hover { transform: translate(-2px, -2px); box-shadow: 3px 3px 0 var(--gray-400); }
+.button--dark { background: var(--ink); color: var(--paper); }
+
+.button-row { display: flex; flex-wrap: wrap; gap: 14px; }
+
+/* ---- Фотографии ----
+   Цветные снимки приглушаются до тёплого серого, сверху ложится зерно бумаги. */
+
+.photo {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  background: var(--gray-100);
+}
+.photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(.9) sepia(.25) contrast(.95) brightness(.94);
+}
+.photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--grain);
+  mix-blend-mode: multiply;
+  box-shadow: inset 0 0 40px rgba(98, 95, 89, .25);
+  pointer-events: none;
+}
+.photo figcaption {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 1;
+  padding: 4px 10px;
+  background: var(--paper-light);
+  font: 13px var(--font-mono);
+}
+
+/* ---- Карточка товара ---- */
+
+.product-card { position: relative; display: block; text-decoration: none; }
+.product-card .photo { aspect-ratio: 4 / 5; border: 1px solid var(--gray-200); transition: transform .25s; }
+.product-card:hover .photo { transform: rotate(-1deg); }
+.product-card h3 { margin: 14px 0 4px; font-size: 22px; }
+.product-card p { margin: 0; font-size: 16px; color: var(--gray-600); }
+
+/* ценник-бирка с дырочкой под нитку */
+.price-tag {
+  position: absolute;
+  top: 16px;
+  right: -8px;
+  z-index: 2;
+  padding: 6px 12px 6px 22px;
+  border: 1px solid var(--gray-400);
+  background: var(--paper-light);
+  font: 15px var(--font-mono);
+  transform: rotate(4deg);
+  clip-path: polygon(10px 0, 100% 0, 100% 100%, 10px 100%, 0 50%);
+}
+.product-card:hover .price-tag { animation: swing 1s ease-in-out; }
+@keyframes swing {
+  0%, 100% { transform: rotate(4deg); }
+  25% { transform: rotate(13deg); }
+  50% { transform: rotate(-3deg); }
+  75% { transform: rotate(8deg); }
+}
+.price-tag::before {
+  content: "";
+  position: absolute;
+  left: 9px;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  margin-top: -3px;
+  border: 1px solid var(--gray-600);
+  border-radius: 50%;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px 28px;
+}
+
+/* ---- Карточки команды: подпись должности и скотч ---- */
+
+.team-card__role {
+  margin: 0 0 8px;
+  font: 13px var(--font-mono);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--gray-600);
+}
+
+/* полоска скотча */
+.team-card--taped .team-card__front::before,
+.team-card--taped .team-card__back::before {
+  content: "";
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  z-index: 2;
+  width: 96px;
+  height: 26px;
+  background: rgba(238, 234, 224, .55);
+  box-shadow: 0 1px 1px rgba(42, 40, 37, .08);
+  transform: translateX(-50%) rotate(-4deg);
+}
+
+/* с изнанки карточки тот же скотч виден зеркально */
+.team-card--taped .team-card__back::before { transform: translateX(-50%) rotate(4deg); }
+
+/* уголки, как в старом фотоальбоме */
+.team-card--corners .photo::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(135deg, var(--ink) 12px, transparent 12px) top left,
+    linear-gradient(225deg, var(--ink) 12px, transparent 12px) top right,
+    linear-gradient(45deg, var(--ink) 12px, transparent 12px) bottom left,
+    linear-gradient(315deg, var(--ink) 12px, transparent 12px) bottom right;
+  background-size: 50% 50%;
+  background-repeat: no-repeat;
+  opacity: .8;
+  pointer-events: none;
+}
+
+/* ---- Карточка сотрудника: переворачивается по клику ---- */
+
+/* --flip — длительность переворота; смена сторон берёт половину от неё же */
+.team-card { --flip: .5s; position: relative; perspective: 1200px; cursor: pointer; }
+
+.team-card__inner {
+  position: relative;
+  transform-style: preserve-3d;
+  /* Кривая обязательно симметричная: тогда ровно на середине времени карточка
+     повёрнута на 90° (стоит ребром), и в этот момент незаметно меняются стороны. */
+  transition: transform var(--flip) cubic-bezier(.45, 0, .55, 1);
+  will-change: transform;
+}
+/* переворот работает без скриптов: надписи «переверни» и «назад» — это label скрытого чекбокса */
+.team-card__toggle:checked + .team-card__inner { transform: rotateY(180deg); }
+
+/* Стороны меняются на середине поворота через visibility.
+   backface-visibility здесь не используется: если браузер «сплющит» 3D,
+   с ней оборот остаётся скрытым при любом положении карточки. */
+.team-card__front,
+.team-card__back { transition: visibility 0s calc(var(--flip) / 2); }
+.team-card__back { visibility: hidden; }
+.team-card__toggle:checked + .team-card__inner .team-card__front { visibility: hidden; }
+.team-card__toggle:checked + .team-card__inner .team-card__back { visibility: visible; }
+.team-card__toggle:focus-visible + .team-card__inner .team-card__turn { outline: 2px dashed var(--ink); outline-offset: 3px; }
+
+.team-card__front,
+.team-card__back {
+  position: relative;
+  padding: 12px 12px 52px;
+  background: var(--paper-texture), var(--paper-light);
+  box-shadow: 1px 3px 6px rgba(29, 28, 26, .25);
+}
+.team-card .photo { aspect-ratio: 1; }
+.team-card h3 { margin: 12px 0 2px; font-size: 22px; }
+
+/* оборот — карточка из картотеки в линейку */
+.team-card__back {
+  --line: 28px;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: calc(var(--line) * 2 - 6px) 20px 44px;  /* текст ложится на линейки */
+  background:
+    var(--paper-texture),
+    repeating-linear-gradient(transparent 0 calc(var(--line) - 1px), rgba(75, 72, 67, .22) 0 var(--line)),
+    var(--paper-light);
+  font-size: 16px;
+  line-height: var(--line);
+  transform: rotateY(180deg);
+}
+.team-card__back blockquote { margin: 0; font: 500 21px/var(--line) var(--font-hand); }
+.team-card__signature { margin: 0; text-align: right; font: 500 21px/var(--line) var(--font-hand); }
+
+/* «переверни» — надпись маркером со стрелкой на нижнем поле карточки */
+.team-card__turn {
+  position: absolute;
+  right: 12px;
+  bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--gray-800);
+  font: 500 22px/1 var(--font-hand);
+  cursor: pointer;
+  transform: rotate(-5deg);
+  transition: transform .2s;
+  -webkit-tap-highlight-color: transparent;
+}
+.team-card__turn::after {
+  content: "";
+  width: 36px;
+  height: 25px;
+  background: var(--marker-arrow) center / contain no-repeat;
+}
+.team-card__turn--back { flex-direction: row-reverse; }
+.team-card__turn--back::after { transform: scaleX(-1); }
+.team-card:hover .team-card__turn { transform: rotate(-5deg) translateX(3px); }
+.team-card:hover .team-card__turn--back { transform: rotate(-5deg) translateX(-3px); }
+
+.quote-card {
+  padding: 24px;
+  border: 1px solid var(--ink);
+  outline: 1px solid var(--ink);
+  outline-offset: 4px;
+  background: var(--paper);
+}
+.quote-card blockquote { margin: 0; font: italic 700 24px/1.25 var(--font-body); }
+.quote-card cite { display: block; margin-top: 10px; font: normal 14px var(--font-mono); }
+
+.stamp {
+  width: 150px;
+  margin: 0;
+  color: var(--gray-600);
+  opacity: .8;
+  mix-blend-mode: multiply;   /* краска впитывается в бумагу */
+  transform: rotate(-12deg);
+  pointer-events: none;
+}
+.stamp svg { display: block; width: 100%; height: auto; overflow: visible; }
+.stamp text { font-family: var(--font-mono); font-weight: 700; text-transform: uppercase; }
+
+.copy-button {
+  align-self: flex-start;
+  padding: 4px 0;
+  border: 0;
+  border-bottom: 1px dashed var(--gray-600);
+  background: none;
+  color: var(--gray-800);
+  font: 15px var(--font-body);
+  cursor: pointer;
+}
+.copy-button:hover { color: var(--ink); border-bottom-style: solid; }
+
+
+/* ---- Блок с фигурным краем, как у салфетки или марки ---- */
+
+/* Края собираются из кругов радиусом --scallop, середина закрашивается прямоугольником. */
+.scalloped {
+  --scallop: 8px;
+  padding: var(--scallop);
+  background: var(--paper-texture), var(--paper-light);
+  -webkit-mask:
+    radial-gradient(var(--scallop), #000 98%, #0000) 0 0 / calc(var(--scallop) * 2) calc(var(--scallop) * 2) round,
+    linear-gradient(#000 0 0) content-box;
+  mask:
+    radial-gradient(var(--scallop), #000 98%, #0000) 0 0 / calc(var(--scallop) * 2) calc(var(--scallop) * 2) round,
+    linear-gradient(#000 0 0) content-box;
+}
+
+/* ---- Прочее ---- */
+
+.boxed { padding: 18px 20px; border: 1px solid var(--ink); background: var(--paper-texture), var(--paper-light); }
+
+.dotted-list { margin: 0; }
+.dotted-list div {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 8px 0;
+  border-bottom: var(--rule-dotted);
+}
+.dotted-list dt { color: var(--gray-600); }
+.dotted-list dd { margin: 0; text-align: right; }
+
+.filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 36px; }
+.filters button {
+  min-height: 44px;
+  padding: 8px 16px;
+  border: 1px solid var(--ink);
+  background: var(--paper-light);
+  color: var(--ink);
+  font: 16px var(--font-body);
+  cursor: pointer;
+}
+.filters button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+
+.faq details { border-bottom: var(--rule); }
+.faq details:first-of-type { border-top: var(--rule); }
+.faq summary {
+  position: relative;
+  padding: 18px 40px 18px 0;
+  font: 700 20px/1.3 var(--font-body);
+  list-style: none;
+  cursor: pointer;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after {
+  content: "+";
+  position: absolute;
+  top: 12px;
+  right: 6px;
+  font: 900 30px var(--font-display);
+}
+.faq details[open] summary::after { content: "–"; }
+.faq details p { max-width: 64ch; padding-bottom: 8px; }
+
+@media (max-width: 980px) {
+  .product-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 760px) {
+  .product-grid { grid-template-columns: 1fr 1fr; gap: 28px 14px; }
+  .product-card h3 { font-size: 18px; }
+  .price-tag { right: -4px; padding: 4px 8px 4px 20px; font-size: 13px; }
+  .team-card__front { padding: 8px 8px 44px; }
+  .team-card h3 { font-size: 18px; }
+  .team-card__back { --line: 20px; padding: calc(var(--line) - 4px) 10px 36px; }
+  .team-card__back blockquote,
+  .team-card__signature { font-size: 17px; }
+  .team-card__turn { right: 8px; bottom: 4px; font-size: 19px; }
+  .team-card__turn::after { width: 29px; height: 20px; }
+  .quote-card blockquote { font-size: 20px; }
+}
+
+@media (max-width: 340px) {
+  .product-grid { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,331 @@
+/* Каркас страницы: лист газеты, шапка, навигация, подвал, сетки разделов. */
+
+.sheet {
+  position: relative;
+  max-width: var(--page-width);
+  margin: 32px auto 0;
+  background: var(--paper-texture), var(--age-spots), var(--paper);
+  background-size: auto, auto, 1200px 1600px, 1200px 1600px, auto;
+  box-shadow:
+    inset 0 0 90px rgba(110, 90, 60, .28),   /* края пожелтели сильнее середины */
+    0 2px 3px rgba(0, 0, 0, .3),
+    0 24px 50px -16px rgba(0, 0, 0, .6);
+}
+
+/* сгиб посередине листа, как у сложенной газеты */
+.sheet::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(90deg,
+    transparent calc(50% - 30px),
+    rgba(60, 50, 35, .07) calc(50% - 1px),
+    rgba(255, 250, 240, .25) 50%,
+    rgba(60, 50, 35, .05) calc(50% + 2px),
+    transparent calc(50% + 24px));
+  pointer-events: none;
+}
+
+/* рваный нижний край листа */
+.sheet::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  height: 16px;
+  background: var(--paper-texture), var(--paper);
+  -webkit-mask: var(--torn-edge) 0 0 / 600px 100% repeat-x;
+  mask: var(--torn-edge) 0 0 / 600px 100% repeat-x;
+}
+
+/* ---- Верхняя строка ---- */
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: var(--topbar-height);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  padding: 0 var(--gutter);
+  border-width: 0 0 1px;
+  font: 13px var(--font-mono);
+}
+.topbar a { text-decoration: none; white-space: nowrap; }
+.topbar a:hover { text-decoration: underline; }
+
+.lang-switch { display: flex; gap: 4px; }
+.lang-switch a {
+  padding: 3px 8px;
+  border: 1px solid transparent;
+  text-decoration: none;
+}
+.lang-switch a[aria-current="true"] { border-color: var(--paper-light); }
+
+/* ---- Шапка с названием ---- */
+
+.masthead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 22px var(--gutter) 16px;
+  border-bottom: var(--rule-double);
+}
+
+.logo {
+  font: 900 clamp(32px, 4vw, 46px)/1 var(--font-display);
+  letter-spacing: -.01em;
+  text-decoration: none;
+  text-shadow: 0 0 1px rgba(42, 40, 37, .35);
+}
+.logo small {
+  display: block;
+  margin-top: 6px;
+  font: italic 15px var(--font-body);
+  letter-spacing: 0;
+  color: var(--gray-600);
+  text-shadow: none;
+}
+
+.main-nav ol {
+  display: flex;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.main-nav a {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 8px 14px;
+  border: 1px solid transparent;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.main-nav__num { font: 12px var(--font-mono); color: var(--gray-600); }
+.main-nav a:hover { border-color: var(--gray-400); }
+.main-nav a[aria-current="page"] {
+  border-color: var(--ink);
+  background: var(--paper-light);
+  font-weight: 700;
+}
+
+.menu-button {
+  display: none;
+  min-height: 46px;
+  padding: 8px 14px;
+  border: 1px solid var(--ink);
+  background: var(--paper-light);
+  color: var(--ink);
+  font: 700 16px var(--font-body);
+  cursor: pointer;
+}
+
+/* ---- Бегущая строка ---- */
+
+.ticker {
+  overflow: hidden;
+  border-bottom: var(--rule);
+  background: var(--paper-dark);
+}
+.ticker__track {
+  display: flex;
+  width: max-content;
+  margin: 0;
+  padding: 8px 0;
+  list-style: none;
+  font: 14px var(--font-mono);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  animation: ticker 45s linear infinite;
+}
+.ticker__track li { padding: 0 28px; }
+.ticker__track li::after { content: "❦"; margin-left: 56px; color: var(--gray-400); }
+@keyframes ticker { to { transform: translateX(-50%); } }
+
+/* ---- Разделы ---- */
+
+.section { padding: 72px var(--gutter); border-bottom: var(--rule); }
+/* раздел на подложке потемнее, чтобы разбить длинную страницу */
+.section--tinted { background: var(--paper-texture), var(--paper-dark); }
+.section:last-child { border-bottom: 0; }
+
+.section-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 36px;
+  padding-bottom: 14px;
+  border-bottom: var(--rule);
+}
+.section-head h2 { margin: 0; }
+.section-head p { max-width: 42ch; margin: 0; font-style: italic; color: var(--gray-600); }
+
+.page-head { padding: 56px var(--gutter) 32px; border-bottom: var(--rule); }
+.page-head .lede { max-width: 52ch; }
+
+.with-sidebar {
+  display: grid;
+  grid-template-columns: 270px 1fr;
+  gap: 56px;
+  padding: 48px var(--gutter) 72px;
+}
+.with-sidebar > aside { position: sticky; top: calc(var(--topbar-height) + 20px); align-self: start; }
+@media (max-height: 600px) {
+  .with-sidebar > aside { position: static; }
+}
+
+/* ---- Подвал ---- */
+
+/* Подвал — стеклянная панель, лежащая на столе рядом с газетой */
+.site-footer {
+  width: min(100% - 48px, var(--page-width) - 48px);
+  margin: 56px auto 40px;
+  padding: 48px var(--gutter) 24px;
+  border-radius: 6px;
+}
+.site-footer a { color: var(--paper-light); }
+.site-footer .logo { display: inline-block; margin-bottom: 12px; text-shadow: none; }
+.site-footer .logo small { color: var(--gray-100); }
+.site-footer__grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 32px;
+}
+.site-footer h2 {
+  margin-bottom: 12px;
+  font: 13px var(--font-mono);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  text-shadow: none;
+  color: var(--gray-100);
+}
+.site-footer ul { margin: 0; padding: 0; list-style: none; }
+.site-footer li { padding: 3px 0; }
+.site-footer__phone { font: 900 26px var(--font-display); text-decoration: none; white-space: nowrap; }
+.site-footer__bottom {
+  margin-top: 40px;
+  padding-top: 16px;
+  border-top: 1px dotted var(--gray-400);
+  color: var(--gray-100);
+  font: 13px var(--font-mono);
+}
+
+/* Кнопка звонка, прилипающая к низу экрана на телефоне */
+.call-bar { display: none; }
+
+/* Стрелка «наверх» — появляется, когда страница прокручена */
+.to-top {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 54px;
+  height: 54px;
+  border: 3px double var(--ink);
+  border-radius: 50%;
+  background: var(--paper-texture), var(--paper-light);
+  box-shadow: 0 4px 12px rgba(29, 28, 26, .35);
+  font: 900 26px/1 var(--font-display);
+  text-decoration: none;
+  transition: opacity .25s, transform .25s;
+}
+.to-top:hover { transform: translateY(-4px); }
+.to-top.is-hidden { opacity: 0; pointer-events: none; transform: translateY(12px); }
+
+/* ---- Планшет ---- */
+
+@media (max-width: 980px) {
+  .main-nav a { padding: 8px 10px; }
+  .main-nav__num { display: none; }
+}
+
+/* ---- Телефон ---- */
+
+@media (max-width: 760px) {
+  body { padding-bottom: 80px; }
+
+  .sheet { margin-top: 0; box-shadow: inset 0 0 50px rgba(110, 90, 60, .25); }
+  .sheet::before { display: none; }
+
+  .site-footer { width: auto; margin: 40px 0 0; border-radius: 0; }
+
+  .topbar__issue { display: none; }
+
+  .masthead { flex-wrap: wrap; row-gap: 0; padding-top: 16px; padding-bottom: 12px; }
+  /* логотип со слоганом сжимается, кнопка меню остаётся в той же строке */
+  .masthead .logo { flex: 1; min-width: 0; }
+  .menu-button { display: block; flex: none; }
+  /* Меню раскрывается плавно: высота анимируется через grid-template-rows (0fr → 1fr),
+     пункты появляются по очереди. visibility убирает закрытое меню из фокуса. */
+  .main-nav {
+    display: grid;
+    grid-template-rows: 0fr;
+    width: 100%;
+    visibility: hidden;
+    transition: grid-template-rows .35s ease, margin-top .35s ease, visibility 0s .35s;
+  }
+  .main-nav.is-open {
+    margin-top: 12px;
+    grid-template-rows: 1fr;
+    visibility: visible;
+    transition: grid-template-rows .35s ease, margin-top .35s ease, visibility 0s;
+  }
+  .main-nav ol { flex-direction: column; gap: 0; min-height: 0; overflow: hidden; border-top: var(--rule); }
+  .main-nav li {
+    border-bottom: var(--rule-dotted);
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: opacity .25s, transform .25s;
+  }
+  .main-nav.is-open li { opacity: 1; transform: none; }
+  .main-nav.is-open li:nth-child(2) { transition-delay: .05s; }
+  .main-nav.is-open li:nth-child(3) { transition-delay: .1s; }
+  .main-nav.is-open li:nth-child(4) { transition-delay: .15s; }
+  .main-nav a { padding: 14px 4px; border: 0; font-size: 19px; }
+  .main-nav__num { display: inline; }
+  .main-nav a[aria-current="page"] { background: none; text-decoration: underline; }
+
+  .section { padding: 48px var(--gutter); }
+  .section-head { flex-direction: column; align-items: start; gap: 8px; }
+
+  .with-sidebar { grid-template-columns: 1fr; gap: 28px; padding-top: 28px; }
+  .with-sidebar > aside { position: static; }
+
+  .site-footer__grid { grid-template-columns: 1fr; gap: 24px; }
+
+  .to-top { right: 16px; bottom: 84px; width: 48px; height: 48px; }
+
+  .call-bar {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 56px;
+    border: 2px solid var(--paper);
+    outline: 2px solid var(--ink);
+    background: var(--ink);
+    color: var(--paper);
+    font: 700 18px var(--font-body);
+    text-decoration: none;
+  }
+}
+
+@media (max-width: 420px) {
+  .menu-button__label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+}
