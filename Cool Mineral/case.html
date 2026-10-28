@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title data-i18n="case.title">Как делался сайт Cool Mineral — кейс</title>
+  <meta name="description" content="Кейс для портфолио: как придумывался стиль, строилась продающая главная и проверялось качество сайта Cool Mineral." data-i18n-content="case.description">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <meta name="theme-color" content="#34312c">
+  <!-- Превью ссылки в соцсетях и мессенджерах. После публикации замените пути на полные адреса (https://…) -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Cool Mineral">
+  <meta property="og:title" content="Как делался сайт Cool Mineral — кейс">
+  <meta property="og:description" content="Кейс для портфолио: как придумывался стиль, строилась продающая главная и проверялось качество сайта Cool Mineral.">
+  <meta property="og:image" content="assets/img/og-cover.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&family=PT+Mono&family=Playfair+Display:wght@900&display=swap">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+</head>
+<body id="top">
+  <a class="skip-link" href="#main" data-i18n="skip">Перейти к содержанию</a>
+
+  <div class="sheet">
+    <div class="topbar glass">
+      <span class="topbar__issue" data-i18n="topbar.issue">Осенний выпуск · 2026</span>
+      <span><span data-i18n="topbar.help">Бесплатная справочная:</span> <a href="tel:5550142763">555-014-2763</a></span>
+      <nav class="lang-switch" aria-label="Язык сайта" data-i18n-label="lang.label">
+        <a href="?lang=ru" data-lang="ru">RU</a>
+        <a href="?lang=en" data-lang="en">EN</a>
+      </nav>
+    </div>
+
+    <header class="masthead">
+      <a class="logo" href="index.html">Cool Mineral <small data-i18n="tagline">Светлые вещи на каждый день&nbsp;— большинство дешевле 25&nbsp;$</small></a>
+      <button class="menu-button" type="button" aria-expanded="false" aria-controls="main-nav">☰ <span class="menu-button__label" data-i18n="nav.title">Навигация</span></button>
+      <nav class="main-nav" id="main-nav" aria-label="Навигация" data-i18n-label="nav.title">
+        <ol>
+          <li><a href="index.html"><span class="main-nav__num">01</span> <span data-i18n="nav.home">Главная</span></a></li>
+          <li><a href="products.html"><span class="main-nav__num">02</span> <span data-i18n="nav.products">Каталог</span></a></li>
+          <li><a href="info.html"><span class="main-nav__num">03</span> <span data-i18n="nav.info">Магазины и ответы</span></a></li>
+          <li><a href="terms.html"><span class="main-nav__num">04</span> <span data-i18n="nav.terms">Условия</span></a></li>
+        </ol>
+      </nav>
+    </header>
+
+    <main id="main" class="case">
+      <header class="page-head">
+        <p class="kicker" data-i18n="case.kicker">Кейс · концепт для портфолио</p>
+        <h1 data-i18n="case.heading">Как делался сайт Cool Mineral</h1>
+        <p class="lede" data-i18n="case.lede">Сайт-справочная для вымышленной сети недорогих магазинов одежды: от брифа и поиска стиля до продающей главной, двух языков и тестирования.</p>
+      </header>
+
+      <section class="facts" aria-label="Проект в цифрах" data-i18n-label="case.factsLabel">
+        <dl class="facts__list">
+          <div><dt data-i18n="case.fact1Value">5&nbsp;страниц</dt><dd data-i18n="case.fact1Text">главная, каталог, товар, справка, условия</dd></div>
+          <div><dt>RU / EN</dt><dd data-i18n="case.fact2Text">смена языка без потери места на странице</dd></div>
+          <div><dt data-i18n="case.fact3Value">11&nbsp;блоков</dt><dd data-i18n="case.fact3Text">в продающей последовательности</dd></div>
+          <div><dt data-i18n="case.fact4Value">320&nbsp;px</dt><dd data-i18n="case.fact4Text">минимальная ширина экрана без поломок вёрстки</dd></div>
+        </dl>
+      </section>
+
+      <section class="section" id="brief">
+        <div class="section-head">
+          <h2 data-i18n="case.briefTitle">Задача</h2>
+          <p data-i18n="case.briefSubtitle">Учебное задание: вымышленная компания и её требования к сайту.</p>
+        </div>
+        <div class="columns">
+          <article>
+            <h3 data-i18n="case.brief1Title">Компания</h3>
+            <p data-i18n="case.brief1Text">Сеть магазинов недорогой одежды. Аудитория — взрослые. Бренд хочет передавать ощущение невинности и оставаться доступным по цене.</p>
+          </article>
+          <article>
+            <h3 data-i18n="case.brief2Title">Что нужно</h3>
+            <p data-i18n="case.brief2Text">Сайт в первую очередь для поддержки покупателей: простая навигация, главная с разделом о команде, страницы товаров, справка, условия и призыв позвонить.</p>
+          </article>
+          <article>
+            <h3 data-i18n="case.brief3Title">Ограничения</h3>
+            <p data-i18n="case.brief3Text">Старомодный стиль и фирменный серый цвет. На сайте ничего не продаётся — цель страницы в лёгком действии: задать вопрос по телефону.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section section--tinted" id="style">
+        <div class="section-head">
+          <h2 data-i18n="case.styleTitle">Поиск стиля</h2>
+          <p data-i18n="case.styleSubtitle">Три итерации: от трёх направлений к «газетному листу на столе».</p>
+        </div>
+        <ol class="steps">
+          <li>
+            <h3 data-i18n="case.style1Title">Три направления</h3>
+            <p data-i18n="case.style1Text">Газетная полоса, винтажная бирка и универмаг ар-деко. Больше всего зацепила газета, но первый вариант выглядел скучно.</p>
+          </li>
+          <li>
+            <h3 data-i18n="case.style2Title">Газета оживает</h3>
+            <p data-i18n="case.style2Text">Таблоид, альбом вырезок и модное приложение к газете. В итоге&nbsp;— смесь: сетка приложения и коллаж из вырезок.</p>
+          </li>
+          <li>
+            <h3 data-i18n="case.style3Title">Бумага на столе</h3>
+            <p data-i18n="case.style3Text">Тёмный стол, состаренный лист с зерном и волокнами, сгиб посередине, рваный край, матовое стекло для шапки и подвала.</p>
+          </li>
+        </ol>
+
+        <div class="case-palette">
+          <h3 data-i18n="case.paletteTitle">Один серый в разной светлоте</h3>
+          <ul class="swatches">
+            <li style="--swatch: #34312c"><span data-i18n="case.swatchDesk">стол</span> #34312c</li>
+            <li style="--swatch: #c7bea9"><span data-i18n="case.swatchDark">подложка</span> #c7bea9</li>
+            <li style="--swatch: #d6cebd"><span data-i18n="case.swatchPaper">лист</span> #d6cebd</li>
+            <li style="--swatch: #e5dece"><span data-i18n="case.swatchLight">вклейка</span> #e5dece</li>
+            <li style="--swatch: #1e1c19"><span data-i18n="case.swatchInk">чернила</span> #1e1c19</li>
+          </ul>
+          <p class="case-fonts" data-i18n="case.fonts">Шрифты: Playfair Display — заголовки, Old Standard TT — текст, PT Mono — подписи, Caveat — пометки от руки.</p>
+        </div>
+      </section>
+
+      <section class="section" id="structure">
+        <div class="section-head">
+          <h2 data-i18n="case.structureTitle">Структура главной</h2>
+          <p data-i18n="case.structureSubtitle">По принципам книги «Идеальный Landing Page»: каждый блок снимает одно сомнение и ведёт к звонку.</p>
+        </div>
+        <ol class="case-structure">
+          <li><b data-i18n="case.block1">Оффер</b> <span data-i18n="case.block1Why">выгода в заголовке и лёгкое действие</span></li>
+          <li><b data-i18n="case.block2">Цифры</b> <span data-i18n="case.block2Why">цена, магазины, бронь, возврат</span></li>
+          <li><b data-i18n="case.block3">Сомнения</b> <span data-i18n="case.block3Why">три страха покупателя и ответы на них</span></li>
+          <li><b data-i18n="case.block4">Выгоды</b> <span data-i18n="case.block4Why">чем бренд отличается от других</span></li>
+          <li><b data-i18n="case.block5">Новинки</b> <span data-i18n="case.block5Why">товары и призыв уточнить размер</span></li>
+          <li><b data-i18n="case.block6">Три шага</b> <span data-i18n="case.block6Why">как получить вещь без лишней поездки</span></li>
+          <li><b data-i18n="case.block7">Команда</b> <span data-i18n="case.block7Why">люди, которые возьмут трубку</span></li>
+          <li><b data-i18n="case.block8">Отзывы</b> <span data-i18n="case.block8Why">социальное доказательство</span></li>
+          <li><b data-i18n="case.block9">Гарантия</b> <span data-i18n="case.block9Why">купон на обмен и возврат снимает риск</span></li>
+          <li><b data-i18n="case.block10">Вопросы</b> <span data-i18n="case.block10Why">барьеры перед звонком</span></li>
+          <li><b data-i18n="case.block11">Призыв</b> <span data-i18n="case.block11Why">финальное приглашение позвонить</span></li>
+        </ol>
+      </section>
+
+      <section class="section section--tinted" id="details">
+        <div class="section-head">
+          <h2 data-i18n="case.detailsTitle">Детали, на которые стоит обратить внимание</h2>
+          <p data-i18n="case.detailsSubtitle">Интерактив сделан по делу и работает даже без скриптов там, где это возможно.</p>
+        </div>
+        <div class="columns">
+          <article>
+            <h3 data-i18n="case.detail1Title">Карточки команды</h3>
+            <p data-i18n="case.detail1Text">Переворот сделан на CSS через скрытый чекбокс. Стороны меняются ровно на 90°, поэтому оборот видно даже там, где браузер упрощает 3D. Скотч переворачивается вместе с карточкой.</p>
+          </article>
+          <article>
+            <h3 data-i18n="case.detail2Title">Бумага без стыков</h3>
+            <p data-i18n="case.detail2Text">Зерно, волокна и крапинки&nbsp;— SVG-шум, пятна старения&nbsp;— градиенты, гаснущие до края плитки. Рваный край и стрелки маркером вшиты в CSS, чтобы всё работало без сервера.</p>
+          </article>
+          <article>
+            <h3 data-i18n="case.detail3Title">Два языка без сервера</h3>
+            <p data-i18n="case.detail3Text">Русский текст лежит в HTML, английский — в одном файле перевода. Язык передаётся в ссылках, а при переключении страница остаётся на том же месте.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="quality">
+        <div class="section-head">
+          <h2 data-i18n="case.qualityTitle">Качество</h2>
+          <p data-i18n="case.qualitySubtitle">Каждая доработка проходила проверку на разных экранах, в двух языках и при открытии без сервера.</p>
+        </div>
+        <ul class="case-checklist">
+          <li data-i18n="case.check1">Мобильная версия от 320&nbsp;px, без горизонтальной прокрутки</li>
+          <li data-i18n="case.check2">Работа с клавиатуры и видимый фокус, подписи для скринридеров</li>
+          <li data-i18n="case.check3">Отключение анимаций по системной настройке</li>
+          <li data-i18n="case.check4">Открывается двойным кликом по файлу, без сборки и зависимостей</li>
+          <li data-i18n="case.check5">Тексты сверены с фактами: никаких обещаний, которых нет в правилах</li>
+          <li data-i18n="case.check6">Все фотографии — Unsplash, авторы перечислены в CREDITS.md</li>
+        </ul>
+      </section>
+
+      <section class="section section--tinted" id="screens">
+        <div class="section-head">
+          <h2 data-i18n="case.screensTitle">Экраны</h2>
+          <p data-i18n="case.screensSubtitle">Компьютер и телефон.</p>
+        </div>
+        <div class="case-shots case-shots--desktop">
+          <figure class="case-shot" style="--tilt: -1deg"><img src="assets/img/case/desktop-home.jpg" width="1280" height="820" loading="lazy" alt="Первый экран главной на компьютере" data-i18n-alt="case.shotHome"></figure>
+          <figure class="case-shot" style="--tilt: .8deg"><img src="assets/img/case/desktop-team.jpg" width="1280" height="820" loading="lazy" alt="Блок команды с карточками на компьютере" data-i18n-alt="case.shotTeam"></figure>
+          <figure class="case-shot" style="--tilt: -.6deg"><img src="assets/img/case/desktop-catalog.jpg" width="1280" height="820" loading="lazy" alt="Каталог товаров на компьютере" data-i18n-alt="case.shotCatalog"></figure>
+        </div>
+        <div class="case-shots case-shots--mobile">
+          <figure class="case-shot" style="--tilt: -2deg"><img src="assets/img/case/mobile-home.jpg" width="390" height="844" loading="lazy" alt="Первый экран главной на телефоне" data-i18n-alt="case.shotMobileHome"></figure>
+          <figure class="case-shot" style="--tilt: 1.5deg"><img src="assets/img/case/mobile-myths.jpg" width="390" height="844" loading="lazy" alt="Блок сомнений на телефоне" data-i18n-alt="case.shotMobileMyths"></figure>
+          <figure class="case-shot" style="--tilt: -1deg"><img src="assets/img/case/mobile-team.jpg" width="390" height="844" loading="lazy" alt="Карточки команды на телефоне" data-i18n-alt="case.shotMobileTeam"></figure>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <footer class="site-footer glass">
+    <div class="site-footer__grid">
+      <div>
+        <a class="logo" href="index.html">Cool Mineral <small data-i18n="tagline">Светлые вещи на каждый день&nbsp;— большинство дешевле 25&nbsp;$</small></a>
+        <p data-i18n="footer.about">Светлая одежда простого кроя по доступной цене. Отложим ваш размер по звонку в любом из 4 магазинов.</p>
+      </div>
+      <nav aria-labelledby="footer-nav">
+        <h2 id="footer-nav" data-i18n="footer.sections">Разделы</h2>
+        <ul>
+          <li><a href="index.html" data-i18n="nav.home">Главная</a></li>
+          <li><a href="products.html" data-i18n="nav.products">Каталог</a></li>
+          <li><a href="info.html" data-i18n="nav.info">Магазины и ответы</a></li>
+          <li><a href="terms.html" data-i18n="nav.terms">Условия</a></li>
+          <li><a href="case.html" data-i18n="nav.case">О проекте</a></li>
+        </ul>
+      </nav>
+      <div>
+        <h2 data-i18n="footer.contact">Бесплатная справочная</h2>
+        <a class="site-footer__phone" href="tel:5550142763">555-014-2763</a>
+        <p data-i18n="footer.hours">Звонок бесплатный.<br><span class="nowrap">Пн–Пт 9:00–21:00</span><br><span class="nowrap">Сб–Вс 10:00–20:00</span></p>
+      </div>
+    </div>
+    <p class="site-footer__bottom" data-i18n="footer.bottom">© 2026 Cool Mineral. Концепт-проект для портфолио: компания, люди и отзывы вымышлены, фото&nbsp;— Unsplash. <a href="case.html">Как делался сайт&nbsp;→</a></p>
+  </footer>
+
+  <a class="call-bar" href="tel:5550142763">☎ <span data-i18n="common.callUs">Позвонить нам</span></a>
+  <a class="to-top" href="#top" aria-label="Наверх страницы" data-i18n-label="common.toTop"><span aria-hidden="true">↑</span></a>
+
+
+  <script src="assets/js/lang/en.js"></script>
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/site.js"></script>
+</body>
+</html>
